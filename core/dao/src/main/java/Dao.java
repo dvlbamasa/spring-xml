@@ -17,89 +17,29 @@ public class Dao {
 	public Dao() {}
 	
 	
-	public static <T> void create(T object) {
-	   	Session session = HibernateSession.getSession();
-	   	Transaction transaction = session.beginTransaction();
-	   	try {
-		   	session.save(object);
-			transaction.commit();
-		} catch (HibernateException e) {
-        	if (transaction!=null) {
-        		transaction.rollback();	
-        	}
-        	e.printStackTrace(); 
-     	} finally {
-        	session.close(); 
-      	}
-  	}
+    public static <T> void create(T object) {
+    	Session session = HibernateSession.getSession();
+        session.save(object);
+    }
 
-  	public static Object get(long id, String object) {
+  	public static Object getById(long id, String object) {
   		Session session = HibernateSession.getSession();
-  		Object resultObject = null;
-  		try {
-  			Criteria criteria = session.createCriteria(object);
-  			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-  			criteria.add(Restrictions.eq("id", id));
-			List results = criteria.list();
-			if (results.size() == 1) {
-				resultObject = results.get(0);
-			}
-			
-		} catch (HibernateException e) {
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-		return resultObject;
+  		Object resultObject = session.load(object + ".class", id);
+        return resultObject;
 	}
   	
 
-	public static <T> void update(T object) {
+  	public static <T> void update(T object) {
   		Session session = HibernateSession.getSession();
-  		Transaction transaction = session.beginTransaction();
-	  	try{
-	  		session.update(object);
-	  		transaction.commit();
-	  	} catch (HibernateException e) {
-        	if (transaction!=null) {
-        		transaction.rollback();	
-        	}
-        	e.printStackTrace(); 
-     	} finally {
-        	session.close(); 
-      	}
+	  	session.update(object);
   	}
 
-  	public static <T> void delete(T object) {
+  	public static <T> void delete(long id, String object) {
   		Session session = HibernateSession.getSession();
-  		Transaction transaction = session.beginTransaction();
-	  	try{
-	  		session.update(object);
-	  		session.delete(object);
-	  		transaction.commit();
-	  	} catch (HibernateException e) {
-        	if (transaction!=null) {
-        		transaction.rollback();	
-        	}
-        	e.printStackTrace(); 
-     	} finally {
-        	session.close(); 
-      	}
-  	}
-
-
-  	public static boolean isDBEmpty() {
-  		Session session = HibernateSession.getSession();
-  		List results = null;
-  		try {
-			Criteria criteria = session.createCriteria("Person");
-			results = criteria.list();
-		} catch (HibernateException e) {
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-		return (results.size() > 0 ? false : true);
+        Object resultObject = session.load(object + ".class", id);
+        if (resultObject != null) {
+            session.delete(resultObject);
+        }
   	}
 
   	public static List getList(String object) {
