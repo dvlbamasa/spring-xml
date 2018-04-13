@@ -4,9 +4,11 @@
 <html>
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
+   <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+   <spring:url value="/resources/css/style.css" var="style" />
    <head>
       <title><c:out value="${title}"></c:out></title> 
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
    </head>
    <body>
    	<h1><c:out value="${title}"></c:out></h1><br/>
@@ -69,8 +71,8 @@
 					</c:if>
 					<c:if test="${orderType ne 'contacts'}"> 
 						<td>
-							<a href="updatePersonView?personId=<c:out value='${person.id}'/>">Update</a><br/> 
-						    <a href="deletePerson?personId=<c:out value='${person.id}'/>" >Delete</a> 
+							<a href="updatePerson?personId=${person.id}">Update</a><br/> 
+						    <a href="deletePerson?personId=${person.id}">Delete</a> 
 						</td>
 					</c:if>
 					<td><c:out value='${person.id}'/> </td>
@@ -113,7 +115,7 @@
 	           	</tr>
 	        </c:forEach>
 	  	</table><br/>
-	   	<form action="addPersonView">
+	   	<form action="addPerson">
 	   		<button type="submit">Add Person</button>
 	   	</form><br/><br/>
 	   <a href="index.html">Back to Homepage</a>

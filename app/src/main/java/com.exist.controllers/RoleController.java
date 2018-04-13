@@ -1,3 +1,11 @@
+import java.io.IOException;
+import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
 public class RoleController {
 	
 	private RoleService roleService;
@@ -17,7 +25,7 @@ public class RoleController {
 		Role role = new Role();
 		modelAndView.addObject("role", role);
 		modelAndView.setViewName("addRole");
-		return modelAndView
+		return modelAndView;
 	}
 
 	public ModelAndView saveRole(Role role) {

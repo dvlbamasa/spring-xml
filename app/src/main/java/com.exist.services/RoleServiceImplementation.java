@@ -8,18 +8,22 @@ public class RoleServiceImplementation implements RoleService {
 		this.dao = dao;
 	}
 
+	@Override
 	public void addRole(Role role) {
 		this.dao.create(role);
 	}
 
+	@Override
 	public void updateRole(Role role) {
 		this.dao.update(role);
 	}
 
+	@Override
 	public Role getRoleById(long id) {
-		return (Role) this.dao.getById(id);
+		return (Role) this.dao.getById(id, "Role");
 	}
 
+	@Override
 	public List<Role> listRoles() {
 		return (List<Role>) this.dao.getList("Role");
 	}

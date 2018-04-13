@@ -8,23 +8,28 @@ public class PersonServiceImplementation implements PersonService{
 		this.dao = dao;
 	}	
 
+	@Override
 	public void addPerson(Person person) {
 		this.dao.create(person);
 	}
 
+	@Override
 	public void updatePerson(Person person) {
 		this.dao.update(person);
 	}
 
-	public List<Person> getPersons() {
+	@Override
+	public List<Person> listPersons() {
 		return this.dao.getList("Person");
 	}
 
+	@Override
 	public Person getPersonById(long id) {
-		return (Person) this.dao.getById("Person", id);
+		return (Person) this.dao.getById(id, "Person");
 	}
 
+	@Override
 	public void deletePerson(long id) {
-		this.dao.delete("Person", id);
+		this.dao.delete(id, "Person");
 	}
 }
