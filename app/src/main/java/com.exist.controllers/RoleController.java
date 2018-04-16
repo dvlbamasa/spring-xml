@@ -4,8 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+@Controller
+@RequestMapping(value="/role")
 public class RoleController {
 	
 	private RoleService roleService;
@@ -14,34 +18,45 @@ public class RoleController {
 		this.roleService = roleService;
 	}
 
+	@RequestMapping(value="/")
 	public ModelAndView listRoles(ModelAndView modelAndView) throws IOException {
 		List<Role> roles = roleService.listRoles();
+		modelAndView.addObject("title", "Role");
 		modelAndView.addObject("roles", roles);
 		modelAndView.setViewName("listRoles");
 		return modelAndView;
 	}
 
+	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public ModelAndView addRole(ModelAndView modelAndView) {
 		Role role = new Role();
+		List<Person> persons = new PersonServiceImplementation().listPersons();
+		modelAndView.addObject("persons", persons);
+		modelAndView.addObject("title", "Add Role");
 		modelAndView.addObject("role", role);
-		modelAndView.setViewName("addRole");
+		modelAndView.setViewName("roleForm");
 		return modelAndView;
 	}
 
-	public ModelAndView saveRole(Role role) {
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	public ModelAndView saveRole(@ModelAttribute("role") Role role) {
 		if (role.getId() == 0) {
 			roleService.addRole(role);	
 		}
 		else {
 			roleService.updateRole(role);
 		}
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/role");
 	}
 
-	public ModelAndView updateRole(long id) {
-		Role role = roleService.getRoleById(id);
-		ModelAndView modelAndView = new ModelAndView("updateRole");
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public ModelAndView updateRole(@RequestParam(value="roleId", required=true) long id) {
+		Role role = roleService.getRoleById(id);		
+		ModelAndView modelAndView = new ModelAndView("roleForm");
+		List<Person> persons = new PersonServiceImplementation().listPersons();
+		modelAndView.addObject("persons", persons);
 		modelAndView.addObject("role", role);
+		modelAndView.addObject("title", "Update Role");
 		return modelAndView;
 	}
 }

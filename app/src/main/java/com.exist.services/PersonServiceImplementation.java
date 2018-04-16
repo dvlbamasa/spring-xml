@@ -32,4 +32,9 @@ public class PersonServiceImplementation implements PersonService{
 	public void deletePerson(long id) {
 		this.dao.delete(id, "Person");
 	}
+
+	@Override
+	public List<Person> listPersonsOrderBy(String orderType) {
+		return this.dao.getOrderedList("Person", orderType);
+	}
 }

@@ -29,8 +29,8 @@
     </bean>
  
     <!-- DataSource -->
-    <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-        id="dataSource">
+    <bean id="dataSource" 
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${database.driver}"></property>
         <property name="url" value="${database.url}"></property>
         <property name="username" value="${database.user}"></property>
@@ -41,8 +41,6 @@
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
-        <property name="packagesToScan"
-            value="model/src/main/"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -58,14 +56,19 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean id="dao" class="Dao"></bean>
-
+    <bean id="dao" class="Dao" autowire="byName"></bean>
 
     <bean id="personService" class="PersonServiceImplementation"></bean>
 
-
+    <bean id="roleService" class="RoleServiceImplementation"></bean>
+ 
     <bean id="personDao"
         class="PersonServiceImplementation">
+        <property name="dao" ref="dao"/>
+    </bean>
+
+    <bean id="roleDao"
+        class="RoleServiceImplementation">
         <property name="dao" ref="dao"/>
     </bean>
 
@@ -73,6 +76,18 @@
         class="PersonController">
         <property name="personService" ref="personService"/>
     </bean>
+
+    <bean id="roleControllerService"
+        class="RoleController">
+        <property name="roleService" ref="roleService"/>
+    </bean>
+
+    <bean id="contactControllerService"
+        class="ContactController">
+        <property name="personService" ref="personService"/>
+    </bean>
+
+    <bean id="mainController" class="MainController"></bean>
  
     <tx:annotation-driven transaction-manager="transactionManager" />
 

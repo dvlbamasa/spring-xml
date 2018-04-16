@@ -34,6 +34,7 @@ public class Role extends EntityParent{
 		return persons;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -48,6 +49,7 @@ public class Role extends EntityParent{
 		return false;
   	}
    
+   	@Override
    	public int hashCode() {
 		int tmp = 0;
 		tmp = ( id + name ).hashCode();

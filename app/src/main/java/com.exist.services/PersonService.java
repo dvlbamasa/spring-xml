@@ -7,4 +7,5 @@ public interface PersonService {
 	public Person getPersonById(long id);
 	public List<Person> listPersons();
 	public void deletePerson(long id);
+	public List<Person> listPersonsOrderBy(String orderType);
 }

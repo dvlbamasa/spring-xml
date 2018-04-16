@@ -5,7 +5,7 @@
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    <head>
       <title><c:out value="${title}"></c:out></title> 
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
    </head>
    <body>
       <h1><c:out value="${title}"></c:out></h1><br/>
@@ -23,7 +23,7 @@
          <c:forEach items="${requestScope.roles}" var="role">
             <tr>
                <td> 
-                  <a href="updateRoleView?roleId=<c:out value='${role.id}'/>">Update</a><br/>
+                  <a href="update?roleId=${role.id}">Update</a><br/>
                </td>
                <td><c:out value="${role.id}"></c:out></td>
                <td><c:out value="${role.name}"></c:out></td>
@@ -36,9 +36,9 @@
          </c:forEach>
       </table>
       <br/>
-      <form action="addRoleView">
+      <form action="add">
          <button type="submit">Add Role</button>
       </form><br/><br/>
-      <a href="index.html">Back to Homepage</a>
+      <a href="/springApp/">Back to Homepage</a>
    </body>
 </html>

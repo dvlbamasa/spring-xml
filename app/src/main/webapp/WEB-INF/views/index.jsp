@@ -4,10 +4,13 @@
     	 <br/><br/>
     </head>
     <body>
-    	<h2>Welcome to the Simple Servlet App!</h2>
-    	Choose the Entity you want to modify:<br/>
-      	<a href="person">1. Person</a><br/>
-      	<a href="roleList">2. Role</a><br/>
-      	<a href="contactList">3. Contact Information</a><br/>
+      <div align="center">
+        <h2>Welcome to the Simple CRUD Application using Spring MVC!</h2>
+        Choose the Entity you want to modify:<br/>
+          <a href="person/list">1. Person</a><br/>
+          <a href="role/">2. Role</a><br/>
+          <a href="contact/">3. Contact Information</a><br/>
+      </div>
+    	
     </body>
 </html>

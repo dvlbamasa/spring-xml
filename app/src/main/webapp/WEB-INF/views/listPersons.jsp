@@ -5,7 +5,6 @@
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
    <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-   <spring:url value="/resources/css/style.css" var="style" />
    <head>
       <title><c:out value="${title}"></c:out></title> 
       <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
@@ -17,7 +16,7 @@
 	   	</h2>
 	   	<c:if test="${orderType ne 'contacts'}"> 
 		   	Pick Order:<br/> 
-	        <form action="personOrderedList" method="GET"> 
+	        <form action="list" method="GET"> 
 	           <select id="order_type" name="order_type"> 
 	              <option value="GWA">GWA</option> 
 	              <option value="Date Hired">Date Hired</option> 
@@ -59,20 +58,20 @@
 					<c:if test="${orderType eq 'contacts'}"> 
 						<c:if test="${person.contactInformation eq null}"> 
 						    <td>
-						       <a href="addContactView?personId=<c:out value='${person.id}'/>" >Add_Contact</a><br/> 
+						       <a href="add?personId=${person.id}" >Add_Contact</a><br/> 
 						    </td>
 						</c:if>
 						<c:if test="${person.contactInformation ne null}"> 
 						    <td>
-						       <a href="updateContactView?personId=<c:out value='${person.id}'/>" >Update_Contact</a><br/>
-						       <a href="deleteContact?personId=<c:out value='${person.id}'/>" >Delete_Contact</a><br/> 
+						       <a href="update?personId=${person.id}" >Update_Contact</a><br/>
+						       <a href="delete?personId=${person.id}" >Delete_Contact</a><br/> 
 						    </td>
 						</c:if>
 					</c:if>
 					<c:if test="${orderType ne 'contacts'}"> 
 						<td>
-							<a href="updatePerson?personId=${person.id}">Update</a><br/> 
-						    <a href="deletePerson?personId=${person.id}">Delete</a> 
+							<a href="update?personId=${person.id}">Update</a><br/> 
+						    <a href="delete?personId=${person.id}">Delete</a> 
 						</td>
 					</c:if>
 					<td><c:out value='${person.id}'/> </td>
@@ -114,10 +113,12 @@
 					</c:if>
 	           	</tr>
 	        </c:forEach>
-	  	</table><br/>
-	   	<form action="addPerson">
-	   		<button type="submit">Add Person</button>
-	   	</form><br/><br/>
-	   <a href="index.html">Back to Homepage</a>
+	  	</table><br/><br/>
+	  	<c:if test="${orderType ne 'contacts'}"> 
+		   	<form action="add">
+		   		<button type="submit">Add Person</button>
+		   	</form><br/><br/>
+		</c:if>
+	   <a href="/springApp/">Back to Homepage</a>
    </body>
 </html>

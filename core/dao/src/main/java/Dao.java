@@ -24,7 +24,7 @@ public class Dao {
 
   	public static Object getById(long id, String object) {
   		Session session = HibernateSession.getSession();
-  		Object resultObject = session.load(object + ".class", id);
+  		Object resultObject = session.load(object, id);
         return resultObject;
 	}
   	
@@ -36,11 +36,30 @@ public class Dao {
 
   	public static <T> void delete(long id, String object) {
   		Session session = HibernateSession.getSession();
-        Object resultObject = session.load(object + ".class", id);
+        Object resultObject = session.load(object, id);
         if (resultObject != null) {
+            session.update(resultObject);
             session.delete(resultObject);
         }
   	}
+
+    public static <T> void delete2(long id, String object) {
+        Session session = HibernateSession.getSession();
+        Object resultObject = session.load(object, id);
+        Transaction transaction = session.beginTransaction();
+        try{
+            session.update(resultObject);
+            session.delete(resultObject);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction!=null) {
+                transaction.rollback(); 
+            }
+            e.printStackTrace(); 
+        } finally {
+            session.close(); 
+        }
+    }
 
   	public static List getList(String object) {
   		Session session = HibernateSession.getSession();
@@ -49,12 +68,12 @@ public class Dao {
   			Criteria criteria = session.createCriteria(object);
   			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			results = criteria.list();
-		} catch (HibernateException e) {
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-		return results;
+    	} catch (HibernateException e) {
+    		e.printStackTrace(); 
+    	} finally {
+    		session.close();
+    	}
+		  return results;
   	}
 
   	public static List getOrderedList(String object, String order) {
@@ -64,12 +83,12 @@ public class Dao {
   			Criteria criteria = session.createCriteria(object);
   			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
   			criteria.addOrder(Order.asc(order));
-			results = criteria.list();
-		} catch (HibernateException e) {
-			e.printStackTrace(); 
-		} finally {
-			session.close();
-		}
-		return results;
+        results = criteria.list();
+  		} catch (HibernateException e) {
+  			e.printStackTrace(); 
+  		} finally {
+  			session.close();
+  		}
+  		return results;
   	}
 }
