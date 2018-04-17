@@ -48,6 +48,7 @@ ALTER TABLE contact_information
        add CONSTRAINT FKauxbhl67hx6ftcqayqtu8xmes 
        FOREIGN KEY (id) 
        REFERENCES person;
+       ON DELETE CASCADE;
     
 ALTER TABLE person 
        add CONSTRAINT FKbs1pxpi8sc2h5t4bc5uov92p 

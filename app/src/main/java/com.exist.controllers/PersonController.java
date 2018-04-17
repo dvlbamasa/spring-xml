@@ -14,10 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value="/person")
 public class PersonController {
 	
-	private PersonServiceImplementation personService;
+	private PersonService personService;
+	private RoleService roleService;
 
-	public void setPersonService(PersonServiceImplementation personService) {
+	public PersonController(PersonService personService, RoleService roleService) {
 		this.personService = personService;
+		this.roleService = roleService;
 	}
 
 	@RequestMapping(value="/list", method=RequestMethod.GET)
@@ -58,7 +60,7 @@ public class PersonController {
 		Address address = new Address();
 		Name name = new Name();
 		Person person = new Person();
-		List<Role> roles = new RoleServiceImplementation().listRoles();
+		List<Role> roles = roleService.listRoles();
 		person.setName(name);
 		person.setContactInformation(contactInformation);
 		person.setAddress(address);
@@ -90,7 +92,7 @@ public class PersonController {
 	public ModelAndView updatePerson(@RequestParam(value="personId", required=true) long id) {
 		Person person = personService.getPersonById(id);
 		ModelAndView modelAndView = new ModelAndView("personForm");
-		List<Role> roles = new RoleServiceImplementation().listRoles();
+		List<Role> roles = roleService.listRoles();
 		modelAndView.addObject("person", person);
 		modelAndView.addObject("roles", roles);
 		modelAndView.addObject("title", "Update Person");

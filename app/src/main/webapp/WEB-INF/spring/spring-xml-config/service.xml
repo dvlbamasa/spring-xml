@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx 
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/mvc 
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven />
+
+ 
+    <bean id="personService"
+        class="PersonServiceImplementation">
+       <constructor-arg ref="dao"/>
+    </bean>
+
+    <bean id="roleService"
+        class="RoleServiceImplementation">
+       <constructor-arg ref="dao"/>
+    </bean>
+
+
+    <bean id="personControllerService"
+        class="PersonController">
+        <constructor-arg index="0" ref="personService"/>
+        <constructor-arg index="1" ref="roleService"/>
+    </bean>
+
+    <bean id="roleControllerService"
+        class="RoleController">
+        <constructor-arg index="0" ref="roleService"/>
+        <constructor-arg index="1" ref="personService"/>
+    </bean>
+
+    <bean id="contactControllerService"
+        class="ContactController">
+        <constructor-arg ref="personService"/>        
+    </bean>
+
+
+    <bean id="mainController" class="MainController"></bean>
+ 
+   
+</beans>

@@ -102,7 +102,7 @@ public class Person extends EntityParent{
 		this.contactInformation = contactInformation;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "person", orphanRemoval=true, cascade = CascadeType.ALL)
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}

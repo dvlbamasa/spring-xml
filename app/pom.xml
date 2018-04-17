@@ -25,6 +25,15 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>${basedir}/src/main/webapp/resources/hibernate-cfg</directory>
+        <includes>
+          <include>hibernate.cfg.xml</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
   <dependencies>
     <dependency>

@@ -15,7 +15,7 @@ public class ContactController {
 	private PersonService personService;
 
 	
-	public void setPersonService(PersonService personService) {
+	public ContactController(PersonService personService) {
 		this.personService = personService;
 	}
 
@@ -67,10 +67,10 @@ public class ContactController {
 	public ModelAndView deleteContact(@RequestParam(value="personId", required=true) long id) {
 		Person person = personService.getPersonById(id);
 		ContactInformation contactInformation = person.getContactInformation();
-		//personService.dao.delete(id, "ContactInformation");
 		person.setContactInformation(null);
 		personService.updatePerson(person);
-		return new ModelAndView("redirect:/");
+		personService.deleteContact(id);
+		return new ModelAndView("redirect:/contact/");
 	}
 	
 }

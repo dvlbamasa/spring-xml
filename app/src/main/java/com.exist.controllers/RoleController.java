@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoleController {
 	
 	private RoleService roleService;
+	private PersonService personService;
 
-	public void setRoleService(RoleService roleService) {
+	public RoleController(RoleService roleService, PersonService personService) {
 		this.roleService = roleService;
+		this.personService = personService;
 	}
 
 	@RequestMapping(value="/")
@@ -30,7 +32,7 @@ public class RoleController {
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public ModelAndView addRole(ModelAndView modelAndView) {
 		Role role = new Role();
-		List<Person> persons = new PersonServiceImplementation().listPersons();
+		List<Person> persons = personService.listPersons();
 		modelAndView.addObject("persons", persons);
 		modelAndView.addObject("title", "Add Role");
 		modelAndView.addObject("role", role);
@@ -53,7 +55,7 @@ public class RoleController {
 	public ModelAndView updateRole(@RequestParam(value="roleId", required=true) long id) {
 		Role role = roleService.getRoleById(id);		
 		ModelAndView modelAndView = new ModelAndView("roleForm");
-		List<Person> persons = new PersonServiceImplementation().listPersons();
+		List<Person> persons = personService.listPersons();
 		modelAndView.addObject("persons", persons);
 		modelAndView.addObject("role", role);
 		modelAndView.addObject("title", "Update Role");

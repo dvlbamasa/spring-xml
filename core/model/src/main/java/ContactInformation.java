@@ -28,7 +28,7 @@ public class ContactInformation {
 	parameters = @Parameter(name = "property", value = "person"))
 	@Id
 	@GeneratedValue(generator = "generator")
-	@Column(name = "contact_id", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	public long getId() {
 		return id;
 	}
