@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,14 +71,17 @@ public class PersonController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView savePerson(@ModelAttribute("person") Person person) {
+	public ModelAndView savePerson(@ModelAttribute("person") Person person, @RequestParam(value="id") long id) {
 		if (person.getId() == 0) {
+			personService.addAddress(person.getAddress());
+			ContactInformation contactInformation = person.getContactInformation();
+			contactInformation.setPerson(person);
 			personService.addPerson(person);
 		}
 		else {
 			personService.updatePerson(person);
 		}
-		return new ModelAndView("redirect:/person/");
+		return new ModelAndView("redirect:/person/list");
 	}
 
 	@RequestMapping(value="/delete")

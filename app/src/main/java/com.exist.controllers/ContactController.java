@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -49,26 +48,25 @@ public class ContactController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, long id) {
+	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, @RequestParam(value="id") long id) {
 		if (contactInformation.getId() == 0) {
 			Person person = personService.getPersonById(id);
 			person.setContactInformation(contactInformation);
 			personService.updatePerson(person);
 		}
 		else {
-			Person person = contactInformation.getPerson();
+			Person person = personService.getPersonById(id);
 			person.setContactInformation(contactInformation);
 			personService.updatePerson(person);
 		}
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/contact/");
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public ModelAndView deleteContact(@RequestParam(value="personId", required=true) long id) {
 		Person person = personService.getPersonById(id);
-		ContactInformation contactInformation = person.getContactInformation();
 		person.setContactInformation(null);
-		personService.updatePerson(person);
+		personService.updatePerson(person);		
 		personService.deleteContact(id);
 		return new ModelAndView("redirect:/contact/");
 	}

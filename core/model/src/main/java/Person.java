@@ -2,6 +2,9 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 
 @Entity
 @Table(name = "person")
@@ -64,6 +67,7 @@ public class Person extends EntityParent{
 		this.birthday = birthday;
 	}
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "birthday", nullable = false)
 	public Date getBirthday() {
 		return birthday;
@@ -83,6 +87,7 @@ public class Person extends EntityParent{
 		this.dateHired = dateHired;
 	}
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "date_hired", nullable = false)
 	public Date getDateHired() {
 		return dateHired;
@@ -102,7 +107,7 @@ public class Person extends EntityParent{
 		this.contactInformation = contactInformation;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "person", orphanRemoval=true, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}
@@ -119,4 +124,26 @@ public class Person extends EntityParent{
 	public Set<Role> getRoles() {
 		return roles;
 	}	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		} 
+		if (!this.getClass().equals(obj.getClass())) {
+			return false;	
+		} 
+		Person obj2 = (Person)obj;
+		if((this.id == obj2.getId()) && (this.name.equals(obj2.getName()))) {
+			 return true;
+		}
+		return false;
+  	}
+   
+   	@Override
+   	public int hashCode() {
+		int tmp = 0;
+		tmp = ( id + name.getFirstName() ).hashCode();
+		return tmp;
+   	}
 }

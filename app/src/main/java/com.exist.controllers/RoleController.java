@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.List;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,14 +40,15 @@ public class RoleController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView saveRole(@ModelAttribute("role") Role role) {
+	public ModelAndView saveRole(@ModelAttribute("role") Role role, @RequestParam(value="id") long id) {
 		if (role.getId() == 0) {
 			roleService.addRole(role);	
 		}
 		else {
 			roleService.updateRole(role);
+
 		}
-		return new ModelAndView("redirect:/role");
+		return new ModelAndView("redirect:/role/");
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.GET)

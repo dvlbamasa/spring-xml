@@ -4,6 +4,7 @@
 <html>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
     <head>
         <title><c:out value="${title}"></c:out></title> 
          <link rel="stylesheet" href="style.css">
@@ -12,7 +13,8 @@
         <div align="center">
             <h1><c:out value="${title}"></c:out></h1><br/>
             Please Fill out the New Contact Information Form: <br/><br/> 
-            <form:form action="save" method="POST" modelAttribute="contactInformation">
+            <spring:url value="save" var="action" />
+            <form:form action="${action}" method="post" modelAttribute="contactInformation">
                 <table>
                     <form:hidden path="id"/>
                     <tr>
@@ -28,7 +30,7 @@
                         <td><form:input path="email" maxlength="30" required="required" /></td>
                     </tr>
                 </table><br/>
-                <input type="submit" value="Submit Form">
+                <input type="submit" value="Submit Form"/>
             </form:form>
         </div>
     </body>

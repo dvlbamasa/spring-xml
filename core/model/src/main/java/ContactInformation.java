@@ -64,7 +64,7 @@ public class ContactInformation {
 		this.person = person;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public Person getPerson() {
 		return person;

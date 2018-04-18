@@ -42,4 +42,9 @@ public class PersonServiceImplementation implements PersonService{
 	public void deleteContact(long id) {
 		dao.delete(id, "ContactInformation");
 	}
+
+	@Override
+	public void addAddress(Address address) {
+		dao.create(address);
+	}
 }

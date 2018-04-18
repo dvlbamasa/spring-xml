@@ -45,7 +45,6 @@ public class DaoImplementation implements Dao{
   		Session session = sessionFactory.getCurrentSession();
         Object resultObject = session.get(object, id);
         if (resultObject != null) {
-            session.update(resultObject);
             session.delete(resultObject);
         }
   	}

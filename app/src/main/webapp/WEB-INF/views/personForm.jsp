@@ -4,6 +4,7 @@
 <html>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+	<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 	<%@ taglib prefix="fn" uri = "http://java.sun.com/jsp/jstl/functions"%>
 	<head>
       	<title><c:out value="${title}"></c:out></title> 
@@ -14,9 +15,10 @@
     	<c:if test="${prompt ne null}">
          	<font color=red><c:out value="${prompt}"></c:out></font><br/><br/>
      	</c:if>
+     	<spring:url value="save" var="action" />
      	<div align="center">
 	    	Please Fill out the Person Information Form: <br/><br/>
-	      	<form:form action="save" method="POST" modelAttribute="person">
+	      	<form:form action="${action}" method="post" modelAttribute="person">
 	      		<table>
 	      			<form:hidden path="id"/>
 	      			<tr>
@@ -88,14 +90,9 @@
 
 	      			<tr><td colspan="2">Check the Roles you want to set to this person:<br/></td></tr>
 	      				
-	      			<c:forEach items="${roles}" var="role">
-	      				<tr>
-			                <td><form:checkbox path="roles" value="${role}" label="${role.id}" /></td>
-			                <td><c:out value="${role.name}" /></td>
-			            </tr>
-	      			</c:forEach>
+	      			<tr><form:checkboxes path="roles" element="table" items="${roles}" itemValue="id" itemLabel="name"/></tr>
 	      		</table><br/>
-	      		<input type="submit" value="Submit Form">
+	      		<input type="submit" value="Submit Form"/>
 		    </form:form>
 		</div>
     </body>
