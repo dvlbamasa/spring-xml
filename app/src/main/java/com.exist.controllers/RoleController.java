@@ -20,9 +20,11 @@ public class RoleController {
 	}
 
 	@RequestMapping(value="/")
-	public ModelAndView listRoles(ModelAndView modelAndView) throws IOException {
+	public ModelAndView listRoles(ModelAndView modelAndView,
+								@RequestParam(value="prompt", required=false) String prompt) throws IOException {
 		List<Role> roles = roleService.listRoles();
 		modelAndView.addObject("title", "Role");
+		modelAndView.addObject("prompt", prompt);
 		modelAndView.addObject("roles", roles);
 		modelAndView.setViewName("listRoles");
 		return modelAndView;
@@ -41,14 +43,16 @@ public class RoleController {
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView saveRole(@ModelAttribute("role") Role role) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/role/");
 		if (role.getId() == 0) {
 			roleService.addRole(role);	
+			modelAndView.addObject("prompt", "Successfully Added a Role!");
 		}
 		else {
 			roleService.updateRole(role);
-
+			modelAndView.addObject("prompt", "Successfully Updated a Role!");
 		}
-		return new ModelAndView("redirect:/role/");
+		return modelAndView;
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.GET)

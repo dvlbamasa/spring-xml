@@ -19,12 +19,19 @@ public class ContactController {
 	}
 
 	@RequestMapping(value="/")
-	public ModelAndView listPersonsContact(ModelAndView modelAndView) throws IOException {
+	public ModelAndView listPersonsContact(ModelAndView modelAndView,
+									@RequestParam(value="prompt", required=false) String prompt) throws IOException {
 		List<Person> persons = personService.listPersons();
-		modelAndView.addObject("orderType", "contacts");
-		modelAndView.addObject("title", "Contact Information");
-		modelAndView.addObject("persons", persons);
-		modelAndView.setViewName("listPersons");
+		if (persons.isEmpty()) {
+			modelAndView.setViewName("noPersons");
+		}
+		else {
+			modelAndView.addObject("orderType", "contacts");
+			modelAndView.addObject("prompt", prompt);
+			modelAndView.addObject("title", "Contact Information");
+			modelAndView.addObject("persons", persons);
+			modelAndView.setViewName("listPersons");
+		}
 		return modelAndView;
 	}
 
@@ -51,17 +58,12 @@ public class ContactController {
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, @RequestParam(value="personId") long id) {
-		if (contactInformation.getId() == 0) {
-			Person person = personService.getPersonById(id);
-			person.setContactInformation(contactInformation);
-			personService.updatePerson(person);
-		}
-		else {
-			Person person = personService.getPersonById(id);
-			person.setContactInformation(contactInformation);
-			personService.updatePerson(person);
-		}
-		return new ModelAndView("redirect:/contact/");
+		ModelAndView modelAndView = new ModelAndView("redirect:/contact/");
+		Person person = personService.getPersonById(id);
+		person.setContactInformation(contactInformation);
+		personService.updatePerson(person);
+		modelAndView.addObject("prompt", "Successfully Updated a Contact Information!");
+		return modelAndView;
 	}
 
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
@@ -70,7 +72,9 @@ public class ContactController {
 		person.setContactInformation(null);
 		personService.updatePerson(person);		
 		personService.deleteContact(id);
-		return new ModelAndView("redirect:/contact/");
+		ModelAndView modelAndView = new ModelAndView("redirect:/contact/");
+		modelAndView.addObject("prompt", "Successfully Deleted a Contact Information");
+		return modelAndView;
 	}
 	
 }

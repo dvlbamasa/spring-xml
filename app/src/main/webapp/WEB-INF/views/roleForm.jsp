@@ -22,8 +22,6 @@
                   <td>Role Name: </td>
                   <td><form:input path="name" maxlength="20" required="required" /></td>
                 </tr>
-                <tr><td colspan="2">Check the Persons you want to set to this role:<br/></td></tr> 
-                <tr><form:checkboxes path="persons" element="table" items="${persons}" itemValue="id" itemLabel="name.firstName"/></tr> 
             </table><br/>
             <input type="submit" value="Submit Form"/>
           </form:form>

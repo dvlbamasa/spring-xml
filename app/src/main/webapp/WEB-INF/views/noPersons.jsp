@@ -9,9 +9,9 @@
 	<body>
 		<h3>Sorry but there are no Person on the Database.</h3>
 		<h4>Add a new Person first:</h4>
-		<form action="addPersonView">
+		<form action="/springApp/person/add">
 			<button type="submit">Add Person</button>
 		</form><br/><br/>
-		<a href="index.html">Back to Homepage</a>
+		<a href="/springApp/">Back to Homepage</a>
 	</body>
 </html>
