@@ -43,10 +43,10 @@ public class DaoImplementation implements Dao{
 
   	public <T> void delete(long id, String object) {
   		Session session = sessionFactory.getCurrentSession();
-        Object resultObject = session.get(object, id);
-        if (resultObject != null) {
-            session.delete(resultObject);
-        }
+      Object resultObject = session.get(object, id);
+      if (resultObject != null) {
+          session.delete(resultObject);
+      }
   	}
 
   	public List getList(String object) {

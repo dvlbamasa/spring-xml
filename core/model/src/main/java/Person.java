@@ -107,7 +107,8 @@ public class Person extends EntityParent{
 		this.contactInformation = contactInformation;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "contact_id", unique= true, nullable=true, insertable=true, updatable=true)
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}

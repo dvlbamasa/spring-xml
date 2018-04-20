@@ -28,12 +28,13 @@ public class ContactController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value="/add")
-	public ModelAndView addContact(ModelAndView modelAndView) {
+	@RequestMapping(value="/add", method=RequestMethod.GET)
+	public ModelAndView addContact(@RequestParam(value="personId", required=true) long id) {
 		ContactInformation contactInformation = new ContactInformation();
+		ModelAndView modelAndView = new ModelAndView("contactForm");
 		modelAndView.addObject("title", "Add Contact Information");
+		modelAndView.addObject("personId", id);
 		modelAndView.addObject("contactInformation", contactInformation);
-		modelAndView.setViewName("contactForm");
 		return modelAndView;
 	}
 
@@ -43,12 +44,13 @@ public class ContactController {
 		ContactInformation contactInformation = person.getContactInformation();
 		ModelAndView modelAndView = new ModelAndView("contactForm");
 		modelAndView.addObject("title", "Update Contact Information");
+		modelAndView.addObject("personId", id);
 		modelAndView.addObject("contactInformation", contactInformation);
 		return modelAndView;
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, @RequestParam(value="id") long id) {
+	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, @RequestParam(value="personId") long id) {
 		if (contactInformation.getId() == 0) {
 			Person person = personService.getPersonById(id);
 			person.setContactInformation(contactInformation);

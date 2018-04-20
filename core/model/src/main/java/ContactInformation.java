@@ -10,7 +10,6 @@ public class ContactInformation {
 	private String landline;
 	private String mobileNumber;
 	private String email;
-	private Person person;
 
 	public ContactInformation() {}
 
@@ -23,12 +22,10 @@ public class ContactInformation {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	@GenericGenerator(name = "generator", strategy = "foreign", 
-	parameters = @Parameter(name = "property", value = "person"))
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "id", unique = true, nullable = false)
+	
+	@GenericGenerator(name = "increment_generator", strategy = "increment")
+	@Id @GeneratedValue(generator = "increment_generator")
+	@Column(name = "contact_id")
 	public long getId() {
 		return id;
 	}
@@ -58,15 +55,5 @@ public class ContactInformation {
 	@Column(name = "email")
 	public String getEmail() {
 		return email;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
-	public Person getPerson() {
-		return person;
 	}
 }

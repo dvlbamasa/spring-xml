@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Collections;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
@@ -55,14 +56,8 @@ public class PersonController {
 
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public ModelAndView addPerson(ModelAndView modelAndView) {
-		ContactInformation contactInformation = new ContactInformation();
-		Address address = new Address();
-		Name name = new Name();
 		Person person = new Person();
 		List<Role> roles = roleService.listRoles();
-		person.setName(name);
-		person.setContactInformation(contactInformation);
-		person.setAddress(address);
 		modelAndView.addObject("title", "Add Person");
 		modelAndView.addObject("person", person);
 		modelAndView.addObject("roles", roles);
@@ -71,11 +66,8 @@ public class PersonController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView savePerson(@ModelAttribute("person") Person person, @RequestParam(value="id") long id) {
+	public ModelAndView savePerson(@ModelAttribute("person") Person person) {
 		if (person.getId() == 0) {
-			personService.addAddress(person.getAddress());
-			ContactInformation contactInformation = person.getContactInformation();
-			contactInformation.setPerson(person);
 			personService.addPerson(person);
 		}
 		else {
@@ -84,15 +76,18 @@ public class PersonController {
 		return new ModelAndView("redirect:/person/list");
 	}
 
-	@RequestMapping(value="/delete")
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public ModelAndView deletePerson(@RequestParam(value="personId", required=true) long id) {
 		personService.deletePerson(id);
 		return new ModelAndView("redirect:/person/list");
 	}
 
-	@RequestMapping(value="/update")
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public ModelAndView updatePerson(@RequestParam(value="personId", required=true) long id) {
 		Person person = personService.getPersonById(id);
+		if (person.getContactInformation() == null) {
+			person.setContactInformation(new ContactInformation());
+		}
 		ModelAndView modelAndView = new ModelAndView("personForm");
 		List<Role> roles = roleService.listRoles();
 		modelAndView.addObject("person", person);

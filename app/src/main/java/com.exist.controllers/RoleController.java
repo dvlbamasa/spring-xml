@@ -40,7 +40,7 @@ public class RoleController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView saveRole(@ModelAttribute("role") Role role, @RequestParam(value="id") long id) {
+	public ModelAndView saveRole(@ModelAttribute("role") Role role) {
 		if (role.getId() == 0) {
 			roleService.addRole(role);	
 		}

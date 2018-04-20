@@ -17,6 +17,7 @@
             <form:form action="${action}" method="post" modelAttribute="contactInformation">
                 <table>
                     <form:hidden path="id"/>
+                    <input type="hidden" name="personId" value="<c:out value='${personId}'/>"/>
                     <tr>
                         <td>Landline: </td>
                         <td><form:input path="landline" maxlength="20" required="required" /></td>
