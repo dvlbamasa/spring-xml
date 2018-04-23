@@ -4,7 +4,7 @@ public class RoleServiceImplementation implements RoleService {
 
 	private Dao dao;
 
-	public RoleServiceImplementation(Dao dao) {
+	public void setDao(Dao dao) {
 		this.dao = dao;
 	}
 

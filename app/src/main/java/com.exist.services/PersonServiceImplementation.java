@@ -4,7 +4,7 @@ public class PersonServiceImplementation implements PersonService{
 
 	private Dao dao;
 
-	public PersonServiceImplementation(Dao dao) {
+	public void setDao(Dao dao) {
 		this.dao = dao;
 	}
 

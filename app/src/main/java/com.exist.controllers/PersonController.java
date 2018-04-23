@@ -20,8 +20,11 @@ public class PersonController {
 	private PersonService personService;
 	private RoleService roleService;
 
-	public PersonController(PersonService personService, RoleService roleService) {
+	public void setPersonService(PersonService personService) {
 		this.personService = personService;
+	}
+
+	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
 

@@ -13,32 +13,41 @@
     <mvc:annotation-driven />
 
  
-    <bean id="personService"
-        class="PersonServiceImplementation">
-       <constructor-arg ref="dao"/>
+    <bean id="personService" class="PersonServiceImplementation">
+        <property name="dao">
+            <ref bean="dao"/>
+        </property>
     </bean>
 
-    <bean id="roleService"
-        class="RoleServiceImplementation">
-       <constructor-arg ref="dao"/>
+    <bean id="roleService" class="RoleServiceImplementation">
+        <property name="dao">
+            <ref bean="dao"/>
+        </property>
     </bean>
 
 
-    <bean id="personControllerService"
-        class="PersonController">
-        <constructor-arg index="0" ref="personService"/>
-        <constructor-arg index="1" ref="roleService"/>
+    <bean id="personControllerService" class="PersonController">
+        <property name="personService">
+            <ref bean="personService"/>
+        </property>
+        <property name="roleService">
+            <ref bean="roleService"/>
+        </property>
     </bean>
 
-    <bean id="roleControllerService"
-        class="RoleController">
-        <constructor-arg index="0" ref="roleService"/>
-        <constructor-arg index="1" ref="personService"/>
+    <bean id="roleControllerService" class="RoleController">
+        <property name="personService">
+            <ref bean="personService"/>
+        </property>
+        <property name="roleService">
+            <ref bean="roleService"/>
+        </property>
     </bean>
 
-    <bean id="contactControllerService"
-        class="ContactController">
-        <constructor-arg ref="personService"/>        
+    <bean id="contactControllerService" class="ContactController">
+        <property name="personService">
+            <ref bean="personService"/>
+        </property>     
     </bean>
 
 

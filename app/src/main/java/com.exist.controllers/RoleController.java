@@ -14,12 +14,15 @@ public class RoleController {
 	private RoleService roleService;
 	private PersonService personService;
 
-	public RoleController(RoleService roleService, PersonService personService) {
-		this.roleService = roleService;
+	public void setPersonService(PersonService personService) {
 		this.personService = personService;
 	}
 
-	@RequestMapping(value="/")
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
+	}
+
+	@RequestMapping(value="/list")
 	public ModelAndView listRoles(ModelAndView modelAndView,
 								@RequestParam(value="prompt", required=false) String prompt) throws IOException {
 		List<Role> roles = roleService.listRoles();
@@ -43,7 +46,7 @@ public class RoleController {
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public ModelAndView saveRole(@ModelAttribute("role") Role role) {
-		ModelAndView modelAndView = new ModelAndView("redirect:/role/");
+		ModelAndView modelAndView = new ModelAndView("redirect:/role/list");
 		if (role.getId() == 0) {
 			roleService.addRole(role);	
 			modelAndView.addObject("prompt", "Successfully Added a Role!");

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value="/contact")
@@ -14,11 +16,11 @@ public class ContactController {
 	private PersonService personService;
 
 	
-	public ContactController(PersonService personService) {
+	public void setPersonService(PersonService personService) {
 		this.personService = personService;
 	}
 
-	@RequestMapping(value="/")
+	@RequestMapping(value="/list")
 	public ModelAndView listPersonsContact(ModelAndView modelAndView,
 									@RequestParam(value="prompt", required=false) String prompt) throws IOException {
 		List<Person> persons = personService.listPersons();
@@ -57,8 +59,19 @@ public class ContactController {
 	}
 
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute("contactInformation") ContactInformation contactInformation, @RequestParam(value="personId") long id) {
-		ModelAndView modelAndView = new ModelAndView("redirect:/contact/");
+	public ModelAndView saveContact(@ModelAttribute("contactInformation") @Valid ContactInformation contactInformation, 
+							BindingResult result,
+							@RequestParam(value="personId") long id) {
+		ContactFormValidation formValidation = new ContactFormValidation();
+		formValidation.validate(contactInformation, result);
+		if (result.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("contactForm");
+			modelAndView.addObject("title", "Update Contact Information");
+			modelAndView.addObject("personId", id);
+			modelAndView.addObject("contactInformation", contactInformation);
+			return modelAndView;
+		}
+		ModelAndView modelAndView = new ModelAndView("redirect:/contact/list");
 		Person person = personService.getPersonById(id);
 		person.setContactInformation(contactInformation);
 		personService.updatePerson(person);
