@@ -36,9 +36,6 @@
     </bean>
 
     <bean id="roleControllerService" class="RoleController">
-        <property name="personService">
-            <ref bean="personService"/>
-        </property>
         <property name="roleService">
             <ref bean="roleService"/>
         </property>
