@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Collections;
@@ -31,7 +30,7 @@ public class PersonController {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public ModelAndView listPersons(ModelAndView modelAndView,
 									@RequestParam(value="order_type", required=false) String orderType,
-									@RequestParam(value="prompt", required=false) String prompt) throws IOException {
+									@RequestParam(value="prompt", required=false) String prompt) {
 		
 		List<Person> persons = null;
 		String subTitle = "";

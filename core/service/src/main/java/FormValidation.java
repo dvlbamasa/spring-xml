@@ -17,15 +17,15 @@ public class FormValidation implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name.middleName", "required.MiddleName"); 
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name.lastName", "required.lastName"); 
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name.lastName", "required.lastName");
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address.streetNo", "required.address.streetNo"); 
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthday", "required.birthday");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateHired", "required.dateHired"); 
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address.barangay", "required.barangay"); 
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address.municipality", "required.municipality"); 
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address.zipCode", "required.zipCode"); 
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "contactInformation.landline", "required.landline"); 
 

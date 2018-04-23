@@ -7,11 +7,13 @@
 		<title>No Persons</title>
 	</head>
 	<body>
-		<h3>Sorry but there are no Person on the Database.</h3>
-		<h4>Add a new Person first:</h4>
-		<form action="/springApp/person/add">
-			<button type="submit">Add Person</button>
-		</form><br/><br/>
-		<a href="/springApp/">Back to Homepage</a>
+		<div align="center">
+			<h3>The database is empty.</h3>
+			<h4>Add a new Person first:</h4>
+			<form action="/springApp/person/add">
+				<button type="submit">Add Person</button>
+			</form><br/><br/>
+			<a href="/springApp/">Back to Homepage</a>
+		</div>
 	</body>
 </html>

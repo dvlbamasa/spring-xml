@@ -49,6 +49,5 @@
 
 
     <bean id="mainController" class="MainController"></bean>
- 
    
 </beans>

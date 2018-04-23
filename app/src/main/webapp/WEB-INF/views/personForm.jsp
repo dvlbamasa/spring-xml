@@ -113,7 +113,7 @@
 	      			Check the Roles you want to set to this person:<br/>
 	      			<form:checkboxes path="roles" element="table" items="${roles}" itemValue="id" itemLabel="name"/>
 	      		</div><br/>
-	      		<input type="submit" value="Submit Form"/>
+	      		<input type="submit" value="${title}"/>
 		    </form:form>
 		</div>
     </body>

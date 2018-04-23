@@ -8,7 +8,12 @@
   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
     <head>
         <title><c:out value="${title}"></c:out></title> 
-        <link rel="stylesheet" href="style.css">
+         <style>
+            .error {
+                color: #ff0000;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <div align="center">
@@ -18,12 +23,13 @@
           <form:form action="${action}" method="post" modelAttribute="role">
             <table>
                 <form:hidden path="id"/>
+                <tr><td colspan="2"><form:errors path="name" cssClass="error" /></td></tr>
                 <tr>
                   <td>Role Name: </td>
                   <td><form:input path="name" maxlength="20" required="required" /></td>
                 </tr>
             </table><br/>
-            <input type="submit" value="Submit Form"/>
+            <input type="submit" value="${title}"/>
           </form:form>
         </div>
     </body>

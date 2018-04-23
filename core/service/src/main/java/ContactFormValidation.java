@@ -11,12 +11,8 @@ public class ContactFormValidation implements Validator {
 
 	@Override
 	public void validate(Object object, Errors errors) {
-		ContactInformation contactInformation = (ContactInformation) object;  
-
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "landline", "required.landline"); 
-
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobileNumber", "required.mobileNumber"); 
-
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.email"); 
 	}
 }

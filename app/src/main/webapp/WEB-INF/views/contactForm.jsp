@@ -39,7 +39,7 @@
                         <td><form:input path="email" maxlength="30" required="required" /></td>
                     </tr>
                 </table><br/>
-                <input type="submit" value="Submit Form"/>
+                <input type="submit" value="${title}"/>
             </form:form>
         </div>
     </body>

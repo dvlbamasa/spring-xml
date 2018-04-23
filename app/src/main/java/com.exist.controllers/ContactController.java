@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +21,7 @@ public class ContactController {
 
 	@RequestMapping(value="/list")
 	public ModelAndView listPersonsContact(ModelAndView modelAndView,
-									@RequestParam(value="prompt", required=false) String prompt) throws IOException {
+									@RequestParam(value="prompt", required=false) String prompt) {
 		List<Person> persons = personService.listPersons();
 		if (persons.isEmpty()) {
 			modelAndView.setViewName("noPersons");
@@ -85,7 +84,7 @@ public class ContactController {
 		person.setContactInformation(null);
 		personService.updatePerson(person);		
 		personService.deleteContact(id);
-		ModelAndView modelAndView = new ModelAndView("redirect:/contact/");
+		ModelAndView modelAndView = new ModelAndView("redirect:/contact/list");
 		modelAndView.addObject("prompt", "Successfully Deleted a Contact Information");
 		return modelAndView;
 	}
